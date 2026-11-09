@@ -87,6 +87,18 @@ fs.writeFileSync(path.join(out, "_headers"), `/*
   Cross-Origin-Opener-Policy: same-origin
 `);
 
+// Same headers for Vercel (project root directory = docs).
+fs.writeFileSync(path.join(out, "vercel.json"), JSON.stringify({
+  headers: [{ source: "/(.*)", headers: [
+    { key: "Content-Security-Policy", value: csp + "; frame-ancestors 'none'" },
+    { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
+    { key: "X-Content-Type-Options", value: "nosniff" },
+    { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+    { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
+    { key: "Cross-Origin-Opener-Policy", value: "same-origin" }
+  ] }]
+}, null, 2));
+
 // ---------- load the shared modules in Node ----------
 for (const f of ["content.js", "redact.js", "engine.js", "standard.js"]) require(path.join(src, f));
 const C = globalThis.SALAMA_CONTENT, E = globalThis.SalamaEngine, ST = globalThis.SALAMA_STANDARD;
