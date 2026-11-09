@@ -18,7 +18,7 @@ alter default privileges for role postgres in schema private revoke execute on f
 
 -- Any script allowed; no markup, control, bidi or zero-width characters. The client collapses newlines.
 create domain public.safe_text as text
-  check (value !~ '[<>[:cntrl:]​-‏‪-‮⁠-⁩﻿]');
+  check (value !~ ('[<>[:cntrl:]' || chr(8203) || '-' || chr(8207) || chr(8234) || '-' || chr(8238) || chr(8288) || '-' || chr(8297) || chr(65279) || ']'));
 
 -- 1. Tables -------------------------------------------------------------------
 create table public.assessments (

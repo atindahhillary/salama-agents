@@ -806,7 +806,7 @@
       }, function (e) {
         var code = e && e.code;
         status.textContent = code === "cancelled" ? "" : code === "not_granted" || code === "sampling_disabled" ? t("ai_declined")
-          : code === "rate_limited" || code === "disabled" ? t("ai_rate") : t("ai_err");
+          : code === "rate_limited" ? t("ai_rate") : code === "disabled" ? t("ai_unavail") : t("ai_err");
         B.event("brief_failed", { detail: code || "error" });
       }).then(function () { go_.disabled = false; stop.hidden = true; });
     });

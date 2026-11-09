@@ -3,20 +3,24 @@
 //                    engine the browser uses, asks Claude to tailor it, validates the result, stores it.
 //   kind "pipeline": admin only (aal2 JWT); turns suppressed aggregates into founder insights.
 // Deploy: supabase functions deploy brief --no-verify-jwt   (access is controlled in code below)
-// Secrets: ANTHROPIC_API_KEY, IP_HMAC_KEY, ALLOWED_ORIGINS, optional ANTHROPIC_MODEL.
+// Secrets: ANTHROPIC_API_KEY (required for briefs). Optional: IP_HMAC_KEY, ALLOWED_ORIGINS, ANTHROPIC_MODEL.
 import Anthropic from "npm:@anthropic-ai/sdk@0.131.0";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
-import "../_shared/content.js";
-import "../_shared/redact.js";
-import "../_shared/engine.js";
+import "./_shared/content.js";
+import "./_shared/redact.js";
+import "./_shared/engine.js";
 
 // deno-lint-ignore no-explicit-any
 const E = (globalThis as any).SalamaEngine;
 const MODEL = Deno.env.get("ANTHROPIC_MODEL") ?? "claude-opus-5-5";
-const ORIGINS = (Deno.env.get("ALLOWED_ORIGINS") ?? "").split(",").map((s) => s.trim()).filter(Boolean);
-const IP_KEY = Deno.env.get("IP_HMAC_KEY") ?? "";
+const ORIGINS = (Deno.env.get("ALLOWED_ORIGINS") ?? "https://atindahhillary.github.io").split(",").map((s) => s.trim()).filter(Boolean);
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
-const anthropic = new Anthropic({ apiKey: Deno.env.get("ANTHROPIC_API_KEY") });
+// Without its own secret, the IP key is derived from the service key: secret, stable, never sent anywhere.
+const IP_KEY = Deno.env.get("IP_HMAC_KEY") || "ip-hmac:" + (Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "");
+const API_KEY = Deno.env.get("ANTHROPIC_API_KEY") ?? "";
+// Created lazily: the SDK throws at construction when the key is missing, which would crash the function at boot.
+let client: Anthropic | null = null;
+const anthropic = () => (client ??= new Anthropic({ apiKey: API_KEY }));
 const service = createClient(SUPABASE_URL, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -62,7 +66,7 @@ async function callClaude(system: string, user: string, schema: unknown, maxToke
     system,
     messages: [{ role: "user", content: user }],
   };
-  const msg = await anthropic.beta.messages.create(params, { timeout: 60_000, maxRetries: 1 });
+  const msg = await anthropic().beta.messages.create(params, { timeout: 60_000, maxRetries: 1 });
   if (msg.stop_reason === "refusal" || msg.stop_reason === "max_tokens") throw new Error("stop:" + msg.stop_reason);
   return msg;
 }
@@ -82,6 +86,9 @@ Deno.serve(async (req) => {
   // deno-lint-ignore no-explicit-any
   let body: any;
   try { body = JSON.parse(raw); } catch { return json({ error: "invalid", rid }, 400); }
+
+  // No key yet: answer before claim_brief so no brief attempts are used up.
+  if (!API_KEY) return json({ error: "unavailable", rid }, 503);
 
   // ---------- pipeline insight (admin only) ----------
   if (body?.kind === "pipeline") {
@@ -124,7 +131,6 @@ Deno.serve(async (req) => {
   // ---------- readiness brief ----------
   const id = String(body?.assessment_id ?? "");
   if (!UUID.test(id)) return json({ error: "invalid", rid }, 400);
-  if (!IP_KEY) return json({ error: "unavailable", rid }, 503);
   const ipHmac = await hmacHex(clientIp(req));
 
   const { data: prof, error } = await service.rpc("claim_brief", { p_assessment: id, p_ip_hmac: ipHmac });

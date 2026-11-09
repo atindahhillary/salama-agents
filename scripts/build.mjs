@@ -149,7 +149,7 @@ if (!process.env.SKIP_PDF) {
 fs.copyFileSync(path.join(src, "redact.js"), path.join(root, "starter-kit", "code", "redact.js"));
 
 // ---------- server copies of the shared modules ----------
-const shared = path.join(root, "supabase", "functions", "_shared");
+const shared = path.join(root, "supabase", "functions", "brief", "_shared");
 fs.mkdirSync(shared, { recursive: true });
 for (const f of ["content.js", "redact.js", "engine.js"]) fs.copyFileSync(path.join(src, f), path.join(shared, f));
 
