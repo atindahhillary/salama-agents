@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="description" content="A six-minute AI safety readiness check for NGOs, schools and education programmes, built on the open SAFE-A standard.">
+<meta name="color-scheme" content="light dark">
+</head>
+<body>
+<title>Salama Agents</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="app.css">
+<a class="skip" href="#main" id="skip">Skip to content</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home" id="brand" aria-label="Salama Agents home"></a>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+    <button type="button" class="lang" id="lang-btn"></button>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+  <section class="view" id="v-home" data-view="home"></section>
+  <section class="view" id="v-check" data-view="check" hidden></section>
+  <section class="view" id="v-report" data-view="report" hidden></section>
+  <section class="view" id="v-standard" data-view="standard" hidden></section>
+  <section class="view" id="v-case" data-view="case" hidden></section>
+  <section class="view" id="v-privacy" data-view="privacy" hidden></section>
+  <section class="view" id="v-admin" data-view="admin" hidden></section>
+</main>
+<footer class="foot">
+  <div class="wrap" id="foot"></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="sr" id="live" aria-live="polite"></div>
+<script src="config.js"></script>
+<script src="content.js"></script>
+<script src="redact.js"></script>
+<script src="engine.js"></script>
+<script src="standard.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

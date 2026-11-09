@@ -1,0 +1,20 @@
+{
+  "_comment": "Copy to config.json (git-ignored) and fill in. Keys starting with _ are stripped at build time. The anon key is public by design; never put the service-role key here.",
+  "supabaseUrl": "https://YOUR-PROJECT.supabase.co",
+  "supabaseAnonKey": "YOUR-ANON-OR-PUBLISHABLE-KEY",
+  "publicUrl": "https://your-domain",
+  "repoUrl": "https://github.com/your-account/salama-agents",
+  "bookingUrl": "",
+  "whatsapp": "",
+  "contactEmail": "",
+  "legalEntity": "[Legal entity name, registration number, address, Nairobi, Kenya]",
+  "privacyEmail": "privacy@your-domain",
+  "securityEmail": "security@your-domain",
+  "odpcNumber": "[ODPC registration number]",
+  "euRep": "[not yet appointed]",
+  "region": "the EU (Frankfurt)",
+  "hostName": "Cloudflare Pages",
+  "aiTerms": "[Confirm Anthropic's commercial terms on training and retention before launch.]",
+  "partners": { "fnd-example": "Example Foundation" },
+  "heroVariant": ""
+}

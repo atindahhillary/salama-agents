@@ -1,0 +1,4 @@
+Contact: mailto:security@example.org
+Expires: 2027-11-09T06:51:54.851Z
+Preferred-Languages: en, sw
+Policy: https://atindahhillary.github.io/salama-agents/#privacy

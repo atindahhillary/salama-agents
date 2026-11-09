@@ -1,0 +1,7 @@
+Salama Agents readiness check and SAFE-A starter kit
+Copyright 2026 Salama Agents contributors
+
+Software: Apache License 2.0 (see LICENSE).
+Standard, scoring rules, question set, case studies and templates: CC BY 4.0 (see LICENSE-STANDARD.md).
+
+This product bundles supabase-js 2.117.2 (MIT licence, see docs/vendor/supabase-LICENSE.txt).

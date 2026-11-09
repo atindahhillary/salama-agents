@@ -1,0 +1,30 @@
+<title>Salama Agents</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="app.css">
+<a class="skip" href="#main" id="skip">Skip to content</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home" id="brand" aria-label="Salama Agents home"></a>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+    <button type="button" class="lang" id="lang-btn"></button>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+  <section class="view" id="v-home" data-view="home"></section>
+  <section class="view" id="v-check" data-view="check" hidden></section>
+  <section class="view" id="v-report" data-view="report" hidden></section>
+  <section class="view" id="v-standard" data-view="standard" hidden></section>
+  <section class="view" id="v-case" data-view="case" hidden></section>
+  <section class="view" id="v-privacy" data-view="privacy" hidden></section>
+  <section class="view" id="v-admin" data-view="admin" hidden></section>
+</main>
+<footer class="foot">
+  <div class="wrap" id="foot"></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="sr" id="live" aria-live="polite"></div>
+<script src="content.js"></script>
+<script src="redact.js"></script>
+<script src="engine.js"></script>
+<script src="standard.js"></script>
+<script src="app.js"></script>
