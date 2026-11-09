@@ -1,4 +1,4 @@
 Contact: mailto:security@example.org
-Expires: 2027-11-09T07:38:28.760Z
+Expires: 2027-11-09T07:39:40.333Z
 Preferred-Languages: en, sw
 Policy: https://salama-agents.vercel.app/#privacy

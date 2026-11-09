@@ -66,8 +66,12 @@ ${body}
 </html>
 `;
 
+// SKIP_PDF keeps the last PDF instead of deleting it with the rest of docs/.
+const pdfPath = path.join(out, "safe-a-v0.1.pdf");
+const keptPdf = process.env.SKIP_PDF && fs.existsSync(pdfPath) ? fs.readFileSync(pdfPath) : null;
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(path.join(out, "vendor"), { recursive: true });
+if (keptPdf) fs.writeFileSync(pdfPath, keptPdf);
 fs.mkdirSync(path.join(out, ".well-known"), { recursive: true });
 fs.writeFileSync(path.join(out, "index.html"), html);
 for (const f of ["content.js", "redact.js", "engine.js", "standard.js", "app.js", "app.css", "print.css"]) fs.copyFileSync(path.join(src, f), path.join(out, f));
