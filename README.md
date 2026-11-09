@@ -1,5 +1,7 @@
 # Salama Agents
 
+**Live:** https://salama-agents.vercel.app (mirror: https://atindahhillary.github.io/salama-agents/)
+
 Secure AI agents for education and NGOs, anywhere. This repository holds the launch system:
 
 - **The readiness check**: a six-step, mobile-first self-assessment (English and Kiswahili beta) that gives an organisation an instant SAFE-A score, its top three fixes with owner, cost and points, a first agent, a 30-day plan, a board and funder summary, and an optional AI-tailored brief written from de-identified answers only.
